@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Vista del lobby (dev)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>⚔ FIGHT OP <span class="online">ONLINE</span></h1>
+  <div class="escenario">
+    <canvas id="juego" width="960" height="540"></canvas>
+    <div id="lobby">
+      <div class="tarjeta">
+        <h2>Únete a la pelea</h2>
+        <input id="nombre" maxlength="12" placeholder="Tu nombre" autocomplete="off">
+        <div class="lados">
+          <button id="ladoIzq" class="btn-lado izq" disabled>🔵 Lado izquierdo</button>
+          <button id="ladoDer" class="btn-lado der">🔴 Lado derecho</button>
+        </div>
+        <div id="seleccion">
+          <h3>Elige tu equipo (3, pelean en ese orden)</h3>
+          <div id="gridPersonajes"></div>
+          <div id="equipoElegido"></div>
+          <div class="lados">
+            <button id="btnAzar" class="btn-lado">🎲 Al azar</button>
+            <button id="btnListo" class="btn-lado">✔ ¡Listo!</button>
+          </div>
+        </div>
+        <p id="estadoLobby">Elige tus 3 personajes</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Maqueta estática del lobby para revisar el diseño (sin conexión)
+    const PJS = [
+      ['luffy','Luffy','#e53935'],['zoro','Zoro','#43a047'],['sanji','Sanji','#fdd835'],
+      ['nami','Nami','#fb8c00'],['usopp','Usopp','#8d6e63'],['chopper','Chopper','#ec407a'],
+      ['franky','Franky','#00acc1'],['brook','Brook','#b0bec5'],['robin','Robin','#8e24aa'],
+      ['ace','Ace','#ff7043'],
+    ];
+    const grid = document.getElementById('gridPersonajes');
+    const sel = ['zoro','luffy','ace'];
+    PJS.forEach(([id,nombre,color]) => {
+      const b = document.createElement('button');
+      b.className = 'btn-pj' + (sel.includes(id) ? ' sel' : '');
+      b.innerHTML = `<span class="punto" style="background:${color}"></span>${nombre}`;
+      grid.appendChild(b);
+    });
+    document.getElementById('equipoElegido').innerHTML = sel.map((id,i) => {
+      const [,n,c] = PJS.find(p => p[0]===id);
+      return `<span class="chip" style="background:${c}55;border-color:${c}">${i+1}. ${n}</span>`;
+    }).join('');
+  </script>
+</body>
+</html>

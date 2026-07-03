@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Fight OP — Galería de personajes</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    #lobby { display: none; }
+  </style>
+</head>
+<body>
+  <h1>⚔ GALERÍA DE PERSONAJES</h1>
+  <div class="escenario">
+    <canvas id="juego" width="960" height="540"></canvas>
+    <div id="lobby">
+      <input id="nombre">
+      <button id="ladoIzq"></button>
+      <button id="ladoDer"></button>
+      <div id="seleccion" class="oculto">
+        <div id="gridPersonajes"></div>
+        <div id="equipoElegido"></div>
+        <button id="btnAzar"></button>
+        <button id="btnListo"></button>
+      </div>
+      <p id="estadoLobby"></p>
+    </div>
+  </div>
+
+  <script>
+    // io falso: esta página no se conecta, solo usa las funciones de dibujo
+    function io() { return { on() {}, emit() {} }; }
+  </script>
+  <script src="cliente.js"></script>
+  <script>
+    // Los 10 personajes en fila, usando el dibujo real del juego
+    const FICHAS = [
+      ['luffy', 'Luffy', '#e53935'], ['zoro', 'Zoro', '#43a047'], ['sanji', 'Sanji', '#fdd835'],
+      ['nami', 'Nami', '#fb8c00'], ['usopp', 'Usopp', '#8d6e63'], ['chopper', 'Chopper', '#ec407a'],
+      ['franky', 'Franky', '#00acc1'], ['brook', 'Brook', '#b0bec5'], ['robin', 'Robin', '#8e24aa'],
+      ['ace', 'Ace', '#ff7043'],
+    ];
+
+    // ?estado=camina | bloqueo | ataque | derribado ... para revisar poses
+    const ESTADO = new URLSearchParams(location.search).get('estado') || 'idle';
+
+    function luchadorDemo(id, color, x) {
+      return {
+        x, y: 0, dir: 1, estado: ESTADO, ataque: ESTADO === 'ataque' ? 'punyo' : null, tAtaque: 0.15,
+        hp: 100, hpMax: 100, stamina: 100, color, escala: 1.0,
+        nombreDef: id, personaje: id, invuln: 0, tEstado: 0.2,
+        esp: { nombre: '', tipo: 'melee', costo: 0, startup: 0.2, activo: 0.1, recuperacion: 0.2, alcance: 100 },
+      };
+    }
+
+    function dibujarGaleria() {
+      dibujarFondo();
+      FICHAS.forEach(([id, nombre, color], i) => {
+        const x = 70 + i * 92;
+        const l = luchadorDemo(id, color, x);
+        const r = { x, y: 0, tAnim: i * 0.7 };
+        dibujarSombra(l, r);
+        dibujarLuchador(l, r, nombre);
+      });
+      requestAnimationFrame(dibujarGaleria);
+    }
+    requestAnimationFrame(dibujarGaleria);
+  </script>
+</body>
+</html>

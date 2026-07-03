@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fight OP — Pelea online</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>⚔ FIGHT OP <span class="online">ONLINE</span></h1>
+
+  <div class="escenario">
+    <canvas id="juego" width="960" height="540"></canvas>
+
+    <div id="lobby">
+      <div class="tarjeta">
+        <h2>Únete a la pelea</h2>
+        <input id="nombre" maxlength="12" placeholder="Tu nombre" autocomplete="off">
+        <div class="lados">
+          <button id="ladoIzq" class="btn-lado izq">🔵 Lado izquierdo</button>
+          <button id="ladoDer" class="btn-lado der">🔴 Lado derecho</button>
+        </div>
+        <div id="seleccion" class="oculto">
+          <h3>Elige tu equipo (3, pelean en ese orden)</h3>
+          <div id="gridPersonajes"></div>
+          <div id="equipoElegido"></div>
+          <div class="lados">
+            <button id="btnAzar" class="btn-lado">🎲 Al azar</button>
+            <button id="btnListo" class="btn-lado" disabled>✔ ¡Listo!</button>
+          </div>
+        </div>
+        <p id="estadoLobby">Conectando…</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controles">
+    <div class="jugador">
+      <h2>Controles</h2>
+      <p><b>A / D</b> o <b>← / →</b> mover · <b>W</b>, <b>↑</b> o <b>Espacio</b> saltar · <b>F</b> cubrirse · <b>S</b> o <b>↓</b> agacharse</p>
+      <p><b>Click izq</b> puño · <b>Click der</b> patada · <b>Ctrl</b> especial de cerca · <b>Shift</b> especial a distancia</p>
+      <p>Los golpes se encadenan (puño→patada→especial) · agachado esquivas puños y proyectiles altos</p>
+      <p><b>R</b> revancha · <b>E</b> cambiar equipo (al terminar la pelea)</p>
+      <p style="opacity:.7">10 personajes de One Piece — elige tus 3 en el lobby, cada uno con su movimiento especial</p>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="cliente.js"></script>
+</body>
+</html>
