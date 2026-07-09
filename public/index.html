@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Fight OP — Pelea online</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -42,6 +42,30 @@
       <p>Los golpes se encadenan (puño→patada→especial) · agachado esquivas puños y proyectiles altos</p>
       <p><b>R</b> revancha · <b>E</b> cambiar equipo (al terminar la pelea)</p>
       <p style="opacity:.7">10 personajes de One Piece — elige tus 3 en el lobby, cada uno con su movimiento especial</p>
+    </div>
+  </div>
+
+  <!-- Controles en pantalla (solo aparecen en móvil / pantalla táctil) -->
+  <div id="tactil" aria-hidden="true">
+    <div class="tac-lado tac-mov">
+      <button class="tac-btn dir" data-hold="izq" aria-label="Izquierda">◀</button>
+      <button class="tac-btn dir" data-hold="der" aria-label="Derecha">▶</button>
+      <button class="tac-btn dir" data-hold="abajo" aria-label="Agacharse">▼</button>
+    </div>
+    <div class="tac-lado tac-acc">
+      <button class="tac-btn bloq" data-hold="bloqueo" aria-label="Cubrirse">🛡</button>
+      <button class="tac-btn salto" data-pulso="salto" aria-label="Saltar">⤒</button>
+      <button class="tac-btn punyo" data-pulso="punyo" aria-label="Puño">👊</button>
+      <button class="tac-btn patada" data-pulso="patada" aria-label="Patada">🦵</button>
+      <button class="tac-btn esp" data-pulso="especial" aria-label="Especial cerca">✦</button>
+      <button class="tac-btn esp2" data-pulso="especial2" aria-label="Especial distancia">✹</button>
+    </div>
+    <div class="tac-extra">
+      <button class="tac-mini" data-cambiar="0">1</button>
+      <button class="tac-mini" data-cambiar="1">2</button>
+      <button class="tac-mini" data-cambiar="2">3</button>
+      <button class="tac-mini" data-accion="revancha">↻</button>
+      <button class="tac-mini" data-accion="reelegir">👥</button>
     </div>
   </div>
 

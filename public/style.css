@@ -231,3 +231,102 @@ b {
   border-radius: 4px;
   padding: 1px 6px;
 }
+
+/* ============================================================
+   Controles táctiles en pantalla (móvil)
+   Ocultos por defecto; se muestran cuando <body> tiene .tactil
+   ============================================================ */
+#tactil {
+  display: none;
+}
+
+body.tactil #tactil {
+  display: flex;
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 50;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+  pointer-events: none; /* los huecos dejan pasar el toque; los botones lo reactivan */
+  gap: 12px;
+}
+
+/* Mientras se juega en móvil, la leyenda de teclas estorba: se oculta */
+body.tactil .controles {
+  display: none;
+}
+
+.tac-lado {
+  display: flex;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.tac-acc {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 60vw;
+}
+
+.tac-btn {
+  pointer-events: auto;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(38, 38, 70, 0.6);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(2px);
+}
+
+.tac-btn.activo {
+  background: rgba(126, 140, 255, 0.75);
+  transform: scale(0.94);
+}
+
+.tac-btn.punyo  { background: rgba(239, 83, 80, 0.55); }
+.tac-btn.patada { background: rgba(255, 167, 38, 0.55); }
+.tac-btn.esp    { background: rgba(126, 140, 255, 0.55); }
+.tac-btn.esp2   { background: rgba(66, 165, 245, 0.55); }
+.tac-btn.bloq   { background: rgba(102, 187, 106, 0.5); }
+
+.tac-extra {
+  position: absolute;
+  left: 50%;
+  bottom: calc(84px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.tac-mini {
+  pointer-events: auto;
+  min-width: 40px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(26, 26, 48, 0.7);
+  color: #fff;
+  font-size: 15px;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* En apaisado los botones son un poco más chicos para no tapar la acción */
+@media (orientation: landscape) and (max-height: 500px) {
+  .tac-btn { width: 54px; height: 54px; font-size: 21px; }
+}

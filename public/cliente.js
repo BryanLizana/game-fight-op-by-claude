@@ -327,6 +327,60 @@ addEventListener('contextmenu', (e) => {
 });
 
 // ------------------------------------------------------------
+// Controles táctiles en pantalla (móvil)
+// Reutilizan los mismos emits que el teclado: 'mantener' y 'pulso'.
+// ------------------------------------------------------------
+const esTactil = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+if (esTactil) document.body.classList.add('tactil');
+
+const panelTactil = document.getElementById('tactil');
+if (panelTactil) {
+  // Botón de acción mantenida (izq / der / abajo / bloqueo)
+  const pulsarHold = (btn, activar) => {
+    const accion = btn.dataset.hold;
+    if (miLado === null || !(accion in mantener)) return;
+    if (mantener[accion] === activar) return;
+    mantener[accion] = activar;
+    btn.classList.toggle('activo', activar);
+    socket.emit('mantener', mantener);
+  };
+
+  panelTactil.querySelectorAll('[data-hold]').forEach((btn) => {
+    const soltar = (e) => { if (e) e.preventDefault(); pulsarHold(btn, false); };
+    btn.addEventListener('touchstart', (e) => { e.preventDefault(); pulsarHold(btn, true); }, { passive: false });
+    btn.addEventListener('touchend', soltar, { passive: false });
+    btn.addEventListener('touchcancel', soltar, { passive: false });
+  });
+
+  // Botón de pulso (salto / puño / patada / especial / especial2)
+  panelTactil.querySelectorAll('[data-pulso]').forEach((btn) => {
+    btn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      if (miLado === null) return;
+      socket.emit('pulso', btn.dataset.pulso);
+      btn.classList.add('activo');
+      setTimeout(() => btn.classList.remove('activo'), 120);
+    }, { passive: false });
+  });
+
+  // Relevo (1/2/3) y revancha / reelegir
+  panelTactil.querySelectorAll('[data-cambiar]').forEach((btn) => {
+    btn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      if (enPelea()) socket.emit('cambiar', Number(btn.dataset.cambiar));
+    }, { passive: false });
+  });
+  panelTactil.querySelectorAll('[data-accion]').forEach((btn) => {
+    btn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      if (miLado !== null && estadoSrv && estadoSrv.pantalla === 'fin') {
+        socket.emit(btn.dataset.accion); // 'revancha' o 'reelegir'
+      }
+    }, { passive: false });
+  });
+}
+
+// ------------------------------------------------------------
 // Efectos: partículas, destellos y rayos
 // ------------------------------------------------------------
 const particulas = [];
