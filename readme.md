@@ -4,6 +4,8 @@ Juego de pelea 1 vs 1 estilo Mortal Kombat con personajes chibi de One Piece.
 Cada jugador elige **3 personajes** y gana quien deje K.O. a los 3 del rival.
 **Multijugador online**: cada jugador entra desde su propio navegador.
 
+![Fight OP — Franky vs Zoro en plena pelea online](public/capturas/captura-1.PNG)
+
 ## Cómo jugarlo online
 
 ```
